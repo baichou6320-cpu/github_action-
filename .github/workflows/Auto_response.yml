@@ -10,12 +10,6 @@ on:
 # 定义触发工作流的事件类型，这里是当一个新的issue_comment被创建时触发
 
 
-jobs:
-  respond:
-    runs-on: ubuntu-latest
-
-# 定义一个名为respond的作业，指定运行环境为最新的Ubuntu系统
-
     steps:
       - name: Check for help needed
 # 定义作业中的一个步骤，命名为"Check for help needed"
@@ -37,5 +31,8 @@ jobs:
             const response = `Hey @${context.actor}, thanks for offering help! We really appreciate it.`;
             // 使用github-script提供的github对象来创建一个新的issue评论
             github.issues.createComment({
-
-
+              owner: owner,
+              repo: repo,
+              issue_number: issueId,
+              body: response,
+            });
