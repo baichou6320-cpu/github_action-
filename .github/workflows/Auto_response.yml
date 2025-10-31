@@ -3,7 +3,8 @@ name: Respond to Help Needed
 on:
   issue_comment:
     types: [created]
-
+    
+    
 jobs:
   respond:
     runs-on: ubuntu-latest
@@ -30,4 +31,3 @@ jobs:
               issue_number: issueId,
               body: response,
             });
-
