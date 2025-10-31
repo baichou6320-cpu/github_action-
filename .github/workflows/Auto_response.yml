@@ -13,13 +13,16 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const issueId = context.payload.issue.id;
+            // 获取 Issue 的编号（而非内部 ID）
+            const issueNumber = context.payload.issue.number;
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const response = `Hey @${context.actor}, thanks for offering help! We really appreciate it.`;
-            context.github.issues.createComment({
+            
+            // 直接使用 github 变量调用 API
+            github.issues.createComment({
               owner: owner,
               repo: repo,
-              issue_number: issueId,
+              issue_number: issueNumber, // 使用编号
               body: response,
             });
