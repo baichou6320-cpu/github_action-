@@ -13,18 +13,11 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            // 获取issue_comment事件中的评论内容
-            const comment = context.payload.comment.body;
-            // 获取issue的ID
             const issueId = context.payload.issue.id;
-            // 获取仓库的拥有者用户名
             const owner = context.repo.owner;
-            // 获取仓库名
             const repo = context.repo.repo;
-            // 定义要回复的内容
             const response = `Hey @${context.actor}, thanks for offering help! We really appreciate it.`;
-            // 直接使用github对象来创建一个新的issue评论
-            await github.issues.createComment({
+            github.issues.createComment({
               owner: owner,
               repo: repo,
               issue_number: issueId,
