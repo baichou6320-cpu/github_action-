@@ -1,0 +1,40 @@
+name: Respond to Help Needed
+# 定义工作流的名称，将在GitHub Actions页面显示
+
+on:
+  issue_comment:
+    types: [created]
+# 定义触发工作流的事件类型，这里是当一个新的issue_comment被创建时触发
+
+jobs:
+  respond:
+    runs-on: ubuntu-latest
+# 定义一个名为respond的作业，指定运行环境为最新的Ubuntu系统
+
+    steps:
+      - name: Check for help needed
+# 定义作业中的一个步骤，命名为"Check for help needed"
+        if: contains(github.event.comment.body, 'help')
+# 条件判断，只有当issue_comment的body中包含'help'时，才执行以下步骤
+        uses: actions/github-script@v6
+# 使用actions/github-script这个action，版本为v6
+        with:
+          script: |
+            // 获取issue_comment事件中的评论内容
+            const comment = context.payload.comment.body;
+            // 获取issue的ID
+            const issueId = context.payload.issue.id;
+            // 获取仓库的拥有者用户名
+            const owner = context.repo.owner;
+            // 获取仓库名
+            const repo = context.repo.repo;
+            // 定义要回复的内容
+            const response = `Hey @${context.actor}, thanks for offering help! We really appreciate it.`;
+            // 使用github-script提供的github对象来创建一个新的issue评论
+            github.issues.createComment({
+              owner: owner,
+              repo: repo,
+              issue_number: issueId,
+              body: response,
+            });
+
