@@ -38,28 +38,4 @@ jobs:
             // 使用github-script提供的github对象来创建一个新的issue评论
             github.issues.createComment({
 
-    steps:
-      - name: Check for help needed
-        if: contains(github.event.comment.body, 'help')
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const comment = context.payload.comment.body;
-            const issueId = context.payload.issue.id;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const github = require('github');
-            const githubToken = process.env.GITHUB_TOKEN;
-            const githubClient = new github({
-              version: '4.0.3',
-              token: githubToken,
-            });
-            const response = `Hey @${context.actor}, thanks for offering help! We really appreciate it.`;
-            githubClient.issues.createComment({
-
-              owner: owner,
-              repo: repo,
-              issue_number: issueId,
-              body: response,
-            });
 
